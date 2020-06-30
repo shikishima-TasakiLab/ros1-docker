@@ -43,6 +43,8 @@ RUN apt-get update && \
         ros-${ROS_DISTRO}-pcl-conversions \
         ros-${ROS_DISTRO}-pcl-ros \
         ros-${ROS_DISTRO}-ainstein-radar \
+        ros-${ROS_DISTRO}-uvc-camera \
+        ros-${ROS_DISTRO}-image-* \
         python-pip \
         python-rosdep \
         python-rosinstall \

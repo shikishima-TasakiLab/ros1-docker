@@ -1,5 +1,6 @@
 #!/bin/bash
 
+DEVICE=""
 CONTAINER_NAME="ros1"
 DOCKER_NET="host"
 
@@ -11,6 +12,7 @@ function usage_exit {
   Usage: $PROG_NAME [OPTIONS...]
   OPTIONS:
     -h, --help              このヘルプを表示
+    -d, --device            コンテナ上で使用するデバイスを指定します．
     -c, --container         コンテナの名前を設定します．
 _EOS_
     exit 1
@@ -29,15 +31,24 @@ _EOS_
 while (( $# > 0 )); do
     if [[ $1 == "--help" ]] || [[ $1 == "-h" ]]; then
         usage_exit
-    elif [[ $1 == "--name" ]] || [[ $1 == "-n" ]]; then
-        if [[ $2 == -* ]] || [[ $2 == *- ]]; then
-            echo "無効なパラメータ： $1 $2"
+    elif [[ $1 == "--container" ]] || [[ $1 == "-c" ]]; then
+        containers="$(docker ps | grep $2)"
+        if [[ ${containers} != "" ]]; then
+            echo 'コンテナ名が重複します．'
             usage_exit
         fi
         CONTAINER_NAME=$2
         shift 2
+    elif [[ $1 == "--device" ]] || [[ $1 == "-d" ]]; then
+        if [[ -c $2 ]]; then
+            DEVICE="${DEVICE} --device $2:$2:mwr"
+        else
+            echo "\"$2\"は存在しません．"
+            usage_exit
+        fi
+        shift 2
     else
-        echo "無効なパラメータ： $1"
+        echo "無効なパラメータ: $1"
         usage_exit
     fi
 done
@@ -126,6 +137,7 @@ docker run \
     --privileged \
     ${CONTAINER_NAME} \
     --net ${DOCKER_NET} \
+    ${DEVICE} \
     ${DOCKER_VOLUME} \
     ${DOCKER_ENV} \
     ${DOCKER_IMAGE} \
