@@ -45,6 +45,9 @@ RUN apt-get update && \
         ros-${ROS_DISTRO}-ainstein-radar \
         ros-${ROS_DISTRO}-uvc-camera \
         ros-${ROS_DISTRO}-image-* \
+        ros-${ROS_DISTRO}-moveit-* \
+        ros-${ROS_DISTRO}-rqt-joint-trajectory-controller \
+        xterm \
         python-pip \
         python-rosdep \
         python-rosinstall \
