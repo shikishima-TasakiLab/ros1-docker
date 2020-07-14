@@ -18,16 +18,6 @@ _EOS_
     exit 1
 }
 
-function usage_exit {
-  cat <<_EOS_ 1>&2
-  Usage: $PROG_NAME [OPTIONS...]
-  OPTIONS:
-    -h, --help                      このヘルプを表示
-    -n, --name NAME                 コンテナの名前を指定
-_EOS_
-    exit 1
-}
-
 while (( $# > 0 )); do
     if [[ $1 == "--help" ]] || [[ $1 == "-h" ]]; then
         usage_exit
