@@ -1,5 +1,7 @@
 FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu18.04
 
+RUN sed -i.bak -e "s%http://[^ ]\+%http://ftp.jaist.ac.jp/pub/Linux/ubuntu/%g" /etc/apt/sources.list
+
 ARG ROS_DISTRO="melodic"
 ARG USER_ID="1000"
 ARG GROUP_ID="15214"
